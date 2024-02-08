@@ -4,8 +4,12 @@ const router = express.Router();
 const { User } = require("../database/models");
 
 router.post("/login", async (req, res) => {
+  console.log("login called");
+
   const { userName, password } = req.body;
 
+  console.log("userName: " + userName);
+  console.log("password: " + password);
   try {
     const usr = User.findOne({ userName: userName });
     if (usr) {
