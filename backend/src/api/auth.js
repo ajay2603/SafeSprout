@@ -4,14 +4,14 @@ const router = express.Router();
 const { User } = require("../database/models");
 
 router.post("/login", async (req, res) => {
-  console.log("login called");
+  console.log("login");
 
-  const { userName, password } = req.body;
+  const { email, password } = req.body;
 
-  console.log("userName: " + userName);
-  console.log("password: " + password);
+  console.log(req.body);
+
   try {
-    const usr = User.findOne({ userName: userName });
+    const usr = User.findOne({ email: email });
     if (usr) {
       if (usr.password == password) {
         res.json({ stat: true });
@@ -28,15 +28,15 @@ router.post("/login", async (req, res) => {
 });
 
 router.post("/signup", async (req, res) => {
-  const { userName, password, name, email } = req.body;
+  const { password, name, email } = req.body;
+  console.log("signup");
   console.log(req.body);
 
-  const usr = await User.findOne({ userName: userName });
+  const usr = await User.findOne({ email: email });
   if (usr) {
     res.json({ stat: false, err: false });
   } else {
     const new_user = new User({
-      userName: userName,
       password: password,
       name: name,
       email: email,
@@ -44,7 +44,7 @@ router.post("/signup", async (req, res) => {
     new_user
       .save()
       .then((resp) => {
-        res.json({ stat: true, userName: userName });
+        res.json({ stat: true, email: email });
       })
       .catch((err) => {
         console.log(err);
