@@ -16,7 +16,7 @@ router.post("/login", async (req, res) => {
       if (usr.password == password) {
         res.json({ stat: true });
       } else {
-        res.json({ stat: true, err: false, usr: true });
+        res.json({ stat: false, err: false, usr: true });
       }
     } else {
       res.json({ stat: false, err: false, usr: false });
