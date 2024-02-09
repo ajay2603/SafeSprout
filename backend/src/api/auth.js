@@ -11,7 +11,7 @@ router.post("/login", async (req, res) => {
   console.log(req.body);
 
   try {
-    const usr = User.findOne({ email: email });
+    const usr = await User.findOne({ email: email });
     if (usr) {
       if (usr.password == password) {
         res.json({ stat: true });
